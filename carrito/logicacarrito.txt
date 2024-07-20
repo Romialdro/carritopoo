@@ -1,0 +1,314 @@
+ PseudoCódigo Código Explicado
+1. Inicialización
+Objetivo: Preparar el entorno.
+Acción: Leer el JSON de productos y crear instancias de la clase Producto.
+ PseudoCódigo
+ 
+Cargar JSON de productos
+Crear instancia de cada producto usando la clase Producto
+2. Mostrar Productos
+Objetivo: Mostrar los productos en la página.
+Acción: Iterar sobre los productos y crear elementos HTML para cada uno.
+ PseudoCódigo
+ 
+Para cada producto en la lista de productos:
+    Crear un div para el producto
+    Agregar el nombre, imagen, precio y botones al div
+    Agregar el div al contenedor de productos
+3. Filtrar Productos
+Objetivo: Filtrar productos basados en criterios de búsqueda.
+Acción: Aplicar filtros por nombre, categoría y rango de precio.
+ PseudoCódigo
+ 
+Obtener valor de búsqueda de nombre, categoría y precio
+Filtrar productos basados en los valores obtenidos
+Mostrar productos filtrados
+4. Manejo de Carrito
+Objetivo: Gestionar el carrito de compras.
+Acción: Agregar productos al carrito, actualizar la disponibilidad y el total del carrito.
+ PseudoCódigo
+ 
+Cuando se hace clic en "Comprar":
+    Disminuir el stock del producto
+    Agregar el producto al carrito o incrementar la cantidad si ya está en el carrito
+    Actualizar la disponibilidad y el total del carrito
+
+Cuando se hace clic en "Restar":
+    Incrementar el stock del producto
+    Disminuir la cantidad en el carrito o eliminarlo si la cantidad es 0
+    Actualizar la disponibilidad y el total del carrito
+
+Cuando se hace clic en "Limpiar Carrito":
+    Vaciar el carrito
+    Actualizar el total del carrito
+5. Actualizar Disponibilidad
+Objetivo: Reflejar los cambios en stock en la interfaz.
+Acción: Actualizar la cantidad disponible de cada producto en la página.
+ PseudoCódigo
+ 
+Para cada producto en la lista:
+    Actualizar el stock mostrado en la interfaz
+6. Mostrar Detalles del Producto
+Objetivo: Mostrar información detallada del producto.
+Acción: Mostrar un alert con los detalles del producto.
+ PseudoCódigo
+ 
+Cuando se hace clic en "Mostrar Detalles":
+    Mostrar un alert con el nombre, precio, disponibilidad y descripción del producto
+Flujorama
+Inicio
+
+Cargar JSON de productos
+Crear instancias de productos
+Mostrar Productos
+
+Para cada producto:
+Crear div
+Añadir nombre, imagen, precio y botones
+Insertar div en el contenedor de productos
+Filtros
+
+Obtener valores de búsqueda
+Filtrar productos según nombre, categoría y precio
+Mostrar productos filtrados
+Carrito
+
+Comprar Producto
+Disminuir stock del producto
+Añadir o incrementar cantidad en carrito
+Actualizar disponibilidad y total
+Restar Producto
+Incrementar stock del producto
+Disminuir o eliminar cantidad en carrito
+Actualizar disponibilidad y total
+Limpiar Carrito
+Vaciar carrito
+Actualizar total
+Actualizar Disponibilidad
+
+Para cada producto:
+Actualizar stock en la interfaz
+Detalles del Producto
+
+Mostrar alert con información del producto
+---------------------------------------------------------------------------------------------------------
+1. Inicialización
+Objetivo: Preparar el entorno cargando los datos y creando instancias de la clase Producto.
+
+PseudoCódigo:
+ 
+Cargar JSON de productos
+Para cada producto en el JSON:
+    Crear instancia de Producto usando la clase Producto
+
+Código Explicado:
+
+javascript
+ 
+const productos = productosJSON.map(prod => new Producto(prod.nombre, prod.imagen, prod.precio, prod.stock, prod.categoria, prod.descripcion));
+Técnicas Utilizadas:
+map(): Para iterar sobre el array de JSON y crear instancias de la clase Producto.
+new Producto(): Para crear nuevas instancias de la clase Producto con los datos del JSON.
+2. Mostrar Productos
+Objetivo: Mostrar los productos en la página web.
+
+PseudoCódigo: 
+ 
+Para cada producto en la lista de productos:
+    Crear un div para el producto
+    Añadir nombre, imagen, precio y botones al div
+    Insertar div en el contenedor de productos
+
+Código Explicado:
+
+javascript
+ 
+productosAmostrar.forEach((prod, index) => {
+    const productoElement = document.createElement('div');
+    productoElement.id = `producto${index + 1}`;
+    productoElement.className = 'producto';
+    productoElement.innerHTML = `
+        <h2>${prod.nombre}</h2>
+        <img src="${prod.imagen}" alt="${prod.nombre}">
+        <p>Precio: $${prod.precio}</p>
+        <p>Disponibilidad: <span class="stock">${prod.stock}</span></p>
+        <button class="detalles-btn btn btn-info">Mostrar Detalles</button>
+        <button class="comprar-btn btn btn-success">Comprar</button>
+        <button class="restar-btn btn btn-warning">Restar</button>
+    `;
+    productosContainer.appendChild(productoElement);
+});
+Técnicas Utilizadas:
+document.createElement(): Para crear elementos HTML dinámicamente.
+innerHTML: Para insertar contenido HTML dentro de un elemento.
+appendChild(): Para agregar elementos al DOM.
+3. Filtrar Productos
+Objetivo: Filtrar productos basados en criterios de búsqueda como nombre, categoría y rango de precio.
+
+PseudoCódigo:
+ 
+Obtener valores de búsqueda (nombre, categoría, precio)
+Filtrar productos basados en los valores obtenidos
+Mostrar productos filtrados
+
+Código Explicado:
+
+javascript
+ 
+function filtrarProductos(nombre, categoria, precioMin, precioMax) {
+    let productosFiltrados = productos;
+
+    if (nombre) {
+        productosFiltrados = productosFiltrados.filter(prod => prod.nombre.toLowerCase().includes(nombre.toLowerCase()));
+    }
+
+    if (categoria) {
+        productosFiltrados = productosFiltrados.filter(prod => prod.categoria.toLowerCase().includes(categoria.toLowerCase()));
+    }
+
+    if (!isNaN(precioMin) && !isNaN(precioMax)) {
+        productosFiltrados = productosFiltrados.filter(prod => prod.precio >= precioMin && prod.precio <= precioMax);
+    }
+
+    mostrarProductos(productosFiltrados);
+}
+Técnicas Utilizadas:
+filter(): Para filtrar productos según los criterios.
+includes(): Para buscar coincidencias dentro de cadenas de texto.
+isNaN(): Para verificar si los valores de precio son números válidos.
+4. Manejo de Carrito
+Objetivo: Gestionar el carrito de compras, añadiendo, eliminando o restando productos.
+
+PseudoCódigo: 
+ 
+Cuando se hace clic en "Comprar":
+    Disminuir el stock del producto
+    Añadir o incrementar cantidad en el carrito
+    Actualizar disponibilidad y total del carrito
+
+Cuando se hace clic en "Restar":
+    Incrementar el stock del producto
+    Disminuir o eliminar cantidad en el carrito
+    Actualizar disponibilidad y total del carrito
+
+Cuando se hace clic en "Limpiar Carrito":
+    Vaciar carrito
+    Actualizar total del carrito
+
+Código Explicado:
+
+javascript
+ 
+function manejarCompra(index) {
+    const producto = productos[index];
+    if (producto.comprar()) {
+        const itemCarrito = carrito.find(item => item.producto.nombre === producto.nombre);
+        if (itemCarrito) {
+            itemCarrito.cantidad++;
+        } else {
+            carrito.push({ producto, cantidad: 1 });
+        }
+        actualizarDisponibilidad();
+        actualizarCarrito();
+    }
+}
+
+function manejarResta(index) {
+    const producto = productos[index];
+    const itemCarrito = carrito.find(item => item.producto.nombre === producto.nombre);
+    if (itemCarrito && itemCarrito.cantidad > 0) {
+        itemCarrito.cantidad--;
+        producto.restar();
+        if (itemCarrito.cantidad === 0) {
+            carrito = carrito.filter(item => item.producto.nombre !== producto.nombre);
+        }
+        actualizarDisponibilidad();
+        actualizarCarrito();
+    }
+}
+
+function limpiarCarrito() {
+    carrito = [];
+    actualizarCarrito();
+}
+Técnicas Utilizadas:
+find(): Para buscar un producto en el carrito.
+push(): Para añadir un nuevo producto al carrito.
+filter(): Para eliminar productos del carrito.
+5. Actualizar Disponibilidad
+Objetivo: Reflejar los cambios en stock en la interfaz de usuario.
+
+PseudoCódigo:
+ 
+Para cada producto en la lista:
+    Actualizar el stock mostrado en la interfaz
+
+Código Explicado:
+
+javascript
+ 
+function actualizarDisponibilidad() {
+    productos.forEach((producto, index) => {
+        document.querySelector(`#producto${index + 1} .stock`).innerText = producto.stock;
+    });
+}
+Técnicas Utilizadas:
+forEach(): Para iterar sobre todos los productos.
+querySelector(): Para seleccionar elementos específicos del DOM.
+innerText: Para actualizar el texto visible de un elemento.
+6. Mostrar Detalles del Producto
+Objetivo: Mostrar información detallada del producto seleccionado.
+
+PseudoCódigo:
+
+Cuando se hace clic en "Mostrar Detalles":
+    Mostrar un alert con nombre, precio, disponibilidad y descripción del producto
+
+Código Explicado:
+
+javascript
+ 
+function mostrarDetalles(index) {
+    const producto = productos[index];
+    alert(producto.mostrarInfo());
+}
+Técnicas Utilizadas:
+alert(): Para mostrar un cuadro de diálogo con la información del producto.
+Método mostrarInfo(): Para obtener la información detallada del producto.
+Flujorama
+Inicio
+
+Cargar JSON de productos
+
+Técnica: JSON y objetos en JavaScript.
+Crear instancias de productos
+
+Técnica: Clases y objetos.
+Mostrar Productos
+
+Técnicas: createElement(), innerHTML, appendChild().
+Filtros
+
+Técnicas: filter(), includes(), isNaN().
+Carrito
+
+Comprar Producto
+Disminuir stock.
+Añadir al carrito.
+Actualizar disponibilidad y total.
+Restar Producto
+Incrementar stock.
+Disminuir o eliminar del carrito.
+Actualizar disponibilidad y total.
+Limpiar Carrito
+Vaciar carrito.
+Actualizar total.
+Actualizar Disponibilidad
+
+Técnicas: forEach(), querySelector(), innerText.
+Detalles del Producto
+
+Técnica: alert().
+
+
+fin de lógica aplicada en carrito de compras que se puede modificar llamando a una base de datos

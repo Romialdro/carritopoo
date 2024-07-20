@@ -1,0 +1,70 @@
+/* Estilo general */
+body {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    background-color: #010101;
+    color: aliceblue;
+
+}
+
+/* Estilo del header */
+header {
+    margin-bottom: 20px;
+}
+
+/* Estilo de los filtros */
+#filtros {
+    text-align: center;
+}
+
+#filtros input, #filtros button {
+    margin: 5px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+/* Estilo de los productos */
+#productos-container .producto {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 10px;
+    text-align: center;
+    display: inline-block;
+    width: 200px;
+}
+
+#productos-container img {
+    width: 100%;
+    border-radius: .25rem;
+}
+
+/* Estilo del carrito */
+#carrito {
+    margin: 20px auto;
+}
+
+#lista-carrito .list-group-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: .75rem 1.25rem;
+    color: black!important;
+    font-weight: bolder;
+}
+
+#lista-carrito .btn-danger {
+    margin-left: 1rem;
+}
+
+/* Estilo de los botones */
+button {
+    margin: 5px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+/* Alineación del total del carrito */
+#carrito .text-right {
+    text-align: right;
+}
+
+
